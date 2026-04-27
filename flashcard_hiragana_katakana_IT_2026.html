@@ -766,8 +766,8 @@ function renderCard() {
   const svgId = SVG_IDS[currentScript][key];
   const strokes = STROKES[key] || '—';
 
-  // SVG via Google Drive thumbnail
-  const svgUrl = `https://drive.google.com/thumbnail?id=${svgId}&sz=w400`;
+  // SVG
+  const svgUrl = `${svgId}`;
   document.getElementById('card-svg').innerHTML =
     `<img src="${svgUrl}" alt="${kana}" style="width:190px;height:190px;object-fit:contain;" loading="eager" />`;
 
