@@ -362,12 +362,12 @@ header {
 <!-- HEADER -->
 <header>
   <div class="header-title">
-    ひらがな・カタカナ フラッシュカード
-    <span>Flashcard — Edizione Italiana</span>
+    Hiragana Katakana Flashcard
+    <span>Edizione Italiana</span>
   </div>
   <div class="header-controls">
-    <button class="btn active" id="btn-hiragana" onclick="setScript('hiragana')">ひらがな</button>
-    <button class="btn" id="btn-katakana" onclick="setScript('katakana')">カタカナ</button>
+    <button class="btn active" id="btn-hiragana" onclick="setScript('hiragana')">Hiragana</button>
+    <button class="btn" id="btn-katakana" onclick="setScript('katakana')">Katakana</button>
     <button class="btn" id="btn-difficult" onclick="toggleDifficult()">⚠️ Difficili</button>
     <button class="btn gold" onclick="shuffle()">⇄ Mescola</button>
     <button class="btn" onclick="reset()">↺ Ricomincia</button>
@@ -448,64 +448,64 @@ header {
 // SVG file IDs from Google Drive
 const SVG_IDS = {
   hiragana: {
-    a:'1nmFn-0qBqHgBC3C5If2pA55MgjCX5Hz1', i:'1tjjvsdlmdkuQOiOCVh3bWWsxQB6myUmh',
-    u:'1aPpBowGqdmDVXa-F68aPyvTPpfY5tazw', e:'1ztXCtaamrspUu8DetSzYAN_vfe6Oqjh_',
-    o:'1PuxKfC-dDhxBkD32B7CZE69QfvQKUX09',
-    ka:'1Z8PhrHgv0t4gbEM1T-uGQ3CUVsOGT63W', ki:'1wvkoiKGi8WPgYGpxKwgiqpfd36HorPgh',
-    ku:'1kjaiGvqD3c07eMKs7-Yx1-JVdAfhFGZt', ke:'1VWaVfnpGSdUxJ-2sBXMmFdI6lzjDYky_',
-    ko:'1jIvAJ-wEHLZ-N6PYe6-mQpY7rYOrnQe9',
-    sa:'1LO3uY3V6dOJvM7gI2XKAAgbEpbfvdQT2', shi:'1pe-UPzKDD-q2O7z_K_NqQbtHqJGK_UOn',
-    su:'1o7LtJe4ym4hUy14DPj4vI0C6DnnCqUfI', se:'1IBvpjyzU0Mt25BfokczWVx3FtfjCZu9L',
-    so:'1Rr_3nfSsaat-UnanKZRbrNbsxpDAL1Lh',
-    ta:'1gPDMb3xyXK2HdzHsgiybP1jjc-lYxwMi', chi:'1HUB3idGdZtsHnVVtUNGdQ9rzU8Nu8uJW',
-    tsu:'1Qs_LbTZvAAoDR30zRsWu2ER0rFms6XX5', te:'1USLdtI8pF0uB-B7fnXkeThiKffoqwt9B',
-    to:'1NXgroA_ZM3q2vBO438ooRnjhGM9CI9UR',
-    na:'1GM_xB6VVrGEu1wivhVLYS_qM9zPSmfel', ni:'19eU4Mci7z28zVy-uUhiX_oGHC1esZqsE',
-    nu:'10jftRPFZZSRm0NVtt8xhbZCeCnWukhZ8', ne:'1JDoet0Hum3KH6IA84uCuFJoRi4w2f7xc',
-    no:'1tvEi1vAt6zQvUHUHgY83Syd-3D2yi7bP',
-    ha:'1vqpmvOwpJ4VKpyTPRz69mnsXdm5b5YqA', hi:'1PodIZp0k3ULPyxfeabh1w4C6LLJDt0c0',
-    fu:'1Qe3wyVci7rvRvKwWQkWiApG6CC8bpt00', he:'1vDv450ZYO1dELEy96Bc0vj7URlVFryyp',
-    ho:'1giewvws9Rto1zwMAvyjb06FIp41Q41Gf',
-    ma:'1Fqs6cfmhwdscojM3koGAum8MkxKuOslR', mi:'1GTJZlkJdWPsf6mW8BzpQlDOFbRpuAMYz',
-    mu:'1rJQwhXY0zjGjVncw2uHHnLXRZj9GQnUz', me:'1oEKSR6D1LFGN-QUYAdzSJ6w2-F9XvE5u',
-    mo:'12IYm7R-yQgVGC-lKfN4_Y9HGbq_DPCFE',
-    ya:'1MAEy27P_AOuFuNi-ysAHn5xxC0Jw_8Ub', yu:'1muh50EFKY2Rwp42p1TX7zcrmUZJw6XL1',
-    yo:'1lS4gZgQ-Crd1I52nCns_sJWQ6lSZ60dI',
-    ra:'1c0nBrqwM8HuBPiECAdW-_UNzH9r4HRQj', ri:'1anT1rNQVcqlHZkMU45JiQk_tbB74jUxV',
-    ru:'1F8uEuWqdeCaTSAfMzcQSHqwByRAk3YDp', re:'1oIsHEXHMgVQIEPXcrDK4LwabCBaJw8e3',
-    ro:'1GyZSLnVZB_QvtZxtHNiHqlVgWkVo_6l8',
-    wa:'1lA4wD5bteYyyV-9DLlZGmOM-W6surj-I', wo:'1aTAEI-lm8YHHaYXPtlijR9ZAFtS7SeXa',
-    n:'1lPUsiEx2gcUfjEuTwKbTAxIlXo6l0jlo'
+    a:'h_a.svg', i:'h_i.svg',
+    u:'h_u.svg', e:'h_e.svg',
+    o:'h_o.svg',
+    ka:'h_ka.svg', ki:'h_ki.svg',
+    ku:'h_ku.svg', ke:'h_ke.svg',
+    ko:'h_ko.svg',
+    sa:'h_sa.svg', shi:'h_shi.svg',
+    su:'h_su.svg', se:'h_se.svg',
+    so:'h_so.svg',
+    ta:'h_ta.svg', chi:'h_chi.svg',
+    tsu:'h_tsu.svg', te:'h_te.svg',
+    to:'h_to.svg',
+    na:'h_na.svg', ni:'h_ni.svg',
+    nu:'h_nu.svg', ne:'h_ne.svg',
+    no:'h_no.svg',
+    ha:'h_ha.svg', hi:'h_hi.svg',
+    fu:'h_fu.svg', he:'h_he.svg',
+    ho:'h_ho.svg',
+    ma:'h_ma.svg', mi:'h_mi.svg',
+    mu:'h_mu.svg', me:'h_me.svg',
+    mo:'h_mo.svg',
+    ya:'h_ya.svg', yu:'h_yu.svg',
+    yo:'h_yo.svg',
+    ra:'h_ra.svg', ri:'h_ri.svg',
+    ru:'h_ru.svg', re:'h_re.svg',
+    ro:'h_ro.svg',
+    wa:'h_wa.svg', wo:'h_wo.svg',
+    n:'h_n.svg'
   },
   katakana: {
-    a:'1OmUOIRu00b9osCWwKsdyl3F0fqxffAoT', i:'1aJDb89sXr_DQNJe3mnc7ZDA9ZaFsknl7',
-    u:'1efci2uiKK2NciS8w72MuiR054zCDcmM1', e:'1bl3jgetj_aZ7Qujew5OmhowXp5KxWPpx',
-    o:'1bRPn7unLGK-QA50nhSxgZXCYwZahEafI',
-    ka:'1Tn76iHedBGbfsbk5YPBVyY8H3iHNiKhJ', ki:'1N8C56TofUMiar4gcHwAsuQCn1fKrAAN2',
-    ku:'1SR9qEnEYj-2Z7uAEMcpauR68X0wsgL8a', ke:'1qusepNAYOwVD03AWTOToyD1Kuy7Lqc6r',
-    ko:'1eCuml_AJ4-fo7TKiDK-w0DK8W99AB9gN',
-    sa:'15KcALhJF4MGDFgdlamhS-bHyEYKCSkmF', shi:'10G5InttUinbglOqbJ0aJBgBSyA58fjkW',
-    su:'1vg1j9Xcy6yd-OhE0dWN6X-UFRL_C-vHk', se:'1yMsxCEIrm-R_xdE_4BNE576nHzLWkhyW',
-    so:'1CP7YKz-_1pumA_6Ul3DqEq7GAVEx1MK-',
-    ta:'1DEc2IB4IulA-CIIs_BueUYlgxgatFbvx', chi:'1Tjdq6k9OS-RQEBmbC-UXZDgPvxLdJp7A',
-    tsu:'1Skigg_JPqBz8unSXvbSRff3oemnJx7kd', te:'1T87VuYIKn6nF3jEy8RWml1bVU0kxlUTy',
-    to:'14V1AwnuiD2g41fo8MyeGfQT1M4_p1b1N',
-    na:'1JCQvBY2gc9ZAS--q4LvbeYtMDyM6CnZW', ni:'1Wq4QZJUrUYb7DrKRQIWnfz8AwMfuW600',
-    nu:'1RnCyOTJ0nEeG_D8t8Sn_umAyBYnX18m5', ne:'1CJ3GHhLmRnbwB_oAuMO8LQwYVAXvMws_',
-    no:'1u-xmdT9gIJKZteaYGG8ZwRaF0r8xdXgE',
-    ha:'19KU0NHMBI7N4KZcnwMy9eca0pSQXUxfq', hi:'1WrKBIBGAbut0J5YAGLxaoYA7e8oxje7v',
-    fu:'1HSWyWj3r6wXl1JUIuQ76PbB9xmWsHqqW', he:'14OufvzY78aWJjJPKMyuote3rwTo96eP-',
-    ho:'1kpdEteEb4cn83zG2G2PimoO9xk88kElu',
-    ma:'1cxCF_Y-JfHPOd68s7mw-94iUYlSkYaCf', mi:'1sOUQviSMSYDuujjL_DYCajJ73Rts7rMB',
-    mu:'1oxMbFQs40d9ByXqqVu6H2CKcLhVZr-3m', me:'1PwvNc_I3AjyKSp9dtDUH9yVf27M9Y-BY',
-    mo:'1TbaJLcb5PS9DRbo0VInrjwOiu32pA7_a',
-    ya:'1efztFxoBKHQbibPGOeQXRiQggMRSz63f', yu:'1Sh2Zpgfvzpv2En1P4akrl07-xIxOE7f6',
-    yo:'1E2gbWigS_Oy72aS2XhXRpFGOUKmpKcHS',
-    ra:'1mj3Trd0ucKeCS99cHw-8iW1ms-UvXMxw', ri:'1nBByujRQcenaqDSHsYGpO3t1VyvB50WJ',
-    ru:'1pANNRnwfiUgN1l_ojHXPoHHWImd0J0ha', re:'1TMaUB3skwIJUCQfC59s9Z756_5GRJHeM',
-    ro:'1YB8K5xXXvR1mfatmZ1-nua3wtXWGW_9C',
-    wa:'1t1fj2AUc3qupTpf15SxB1WURqGBKNwbP', wo:'1BDUnmKCWVhLwjaG_1XgWJUKRHm7ICMS2',
-    n:'1QfQecilt6RXpD9OspLUBxe321H_oI8sO'
+    a:'k_a.svg', i:'k_i.svg',
+    u:'k_u.svg', e:'k_e.svg',
+    o:'k_o.svg',
+    ka:'k_ka.svg', ki:'k_ki.svg',
+    ku:'k_ku.svg', ke:'k_ke.svg',
+    ko:'k_ko.svg',
+    sa:'k_sa.svg', shi:'k_shi.svg',
+    su:'k_su.svg', se:'k_se.svg',
+    so:'k_so.svg',
+    ta:'k_ta.svg', chi:'k_chi.svg',
+    tsu:'k_tsu.svg', te:'k_te.svg',
+    to:'k_to.svg',
+    na:'k_na.svg', ni:'k_ni.svg',
+    nu:'k_nu.svg', ne:'k_ne.svg',
+    no:'k_no.svg',
+    ha:'k_ha.svg', hi:'k_hi.svg',
+    fu:'k_fu.svg', he:'k_he.svg',
+    ho:'k_ho.svg',
+    ma:'k_ma.svg', mi:'k_mi.svg',
+    mu:'k_mu.svg', me:'k_me.svg',
+    mo:'k_mo.svg',
+    ya:'k_ya.svg', yu:'k_yu.svg',
+    yo:'k_yo.svg',
+    ra:'k_ra.svg', ri:'k_ri.svg',
+    ru:'k_ru.svg', re:'k_re.svg',
+    ro:'k_ro.svg',
+    wa:'k_wa.svg', wo:'k_wo.svg',
+    n:'k_n.svg'
   }
 };
 
