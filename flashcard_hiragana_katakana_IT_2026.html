@@ -795,7 +795,7 @@ function renderCard() {
 function updateDiffBtn() {
   if (deck.length === 0) return;
   const id = currentScript + ':' + deck[currentIndex].key;
-  document.getElementById('diff-btn').textContent = difficultSet.has(id) ? '⭐' : '😓';
+  document.getElementById('diff-btn').textContent = difficultSet.has(id) ? '⚠️' : '⭐';
 }
 
 function updateProgress() {
