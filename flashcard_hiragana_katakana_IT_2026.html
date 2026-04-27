@@ -351,7 +351,6 @@ header {
 <!-- MAIN -->
 <div class="main-wrap">
   <!-- Difficult panel -->
-  <div class="difficult-panel" id="difficult-panel">
     <div class="panel-header">
       <span>⚠️ Difficili</span>
       <span id="diff-count">0</span>
@@ -863,16 +862,6 @@ document.addEventListener('keydown', e => {
   else if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); flipCard(); }
 });
 
-// ─────────────────────────────────────────
-// DIFFICULT PANEL TOGGLE (from header btn)
-// ─────────────────────────────────────────
-function toggleDifficult() {
-  const panel = document.getElementById('difficult-panel');
-  const isOpen = panel.classList.contains('open');
-  showOnlyDifficult = false; // toggle panel, not filter
-  panel.classList.toggle('open', !isOpen);
-  document.getElementById('btn-difficult').classList.toggle('active', !isOpen);
-}
 
 // ─────────────────────────────────────────
 // START
