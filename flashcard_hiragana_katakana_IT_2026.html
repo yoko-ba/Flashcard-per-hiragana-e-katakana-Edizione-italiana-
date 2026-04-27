@@ -264,7 +264,7 @@ header {
 }
 .back-romaji {
   font-family: 'Space Mono', monospace;
-  font-size: 1rem;
+  font-size: 3rem;
   color: var(--grey);
 }
 .back-sound-btn {
@@ -306,10 +306,10 @@ header {
   font-size: .9rem;
   font-weight: 700;
 }
-.word-italian { font-size: .82rem; color: var(--ink); font-style: italic; }
+.word-italian { font-size: 1.3rem; color: var(--ink); font-style: italic; }
 .word-pos {
   font-family: 'Space Mono', monospace;
-  font-size: .55rem;
+  font-size: 1rem;
   color: var(--grey);
   background: var(--cream);
   padding: 1px 5px;
@@ -363,7 +363,7 @@ header {
 <header>
   <div class="header-title">
     ひらがな・カタカナ フラッシュカード
-    <span>Flashcard — Edizione Italiana 2026</span>
+    <span>Flashcard — Edizione Italiana</span>
   </div>
   <div class="header-controls">
     <button class="btn active" id="btn-hiragana" onclick="setScript('hiragana')">ひらがな</button>
@@ -552,16 +552,16 @@ const STROKES = {
 
 // Row groupings
 const ROWS = [
-  { label:'ア行', keys:['a','i','u','e','o'] },
-  { label:'カ行', keys:['ka','ki','ku','ke','ko'] },
-  { label:'サ行', keys:['sa','shi','su','se','so'] },
-  { label:'タ行', keys:['ta','chi','tsu','te','to'] },
-  { label:'ナ行', keys:['na','ni','nu','ne','no'] },
-  { label:'ハ行', keys:['ha','hi','fu','he','ho'] },
-  { label:'マ行', keys:['ma','mi','mu','me','mo'] },
-  { label:'ヤ行', keys:['ya','yu','yo'] },
-  { label:'ラ行', keys:['ra','ri','ru','re','ro'] },
-  { label:'ワ行+ン', keys:['wa','wo','n'] }
+  { label:'あ・ア行', keys:['a','i','u','e','o'] },
+  { label:'か・カ行', keys:['ka','ki','ku','ke','ko'] },
+  { label:'さ・サ行', keys:['sa','shi','su','se','so'] },
+  { label:'た・タ行', keys:['ta','chi','tsu','te','to'] },
+  { label:'な・ナ行', keys:['na','ni','nu','ne','no'] },
+  { label:'は・ハ行', keys:['ha','hi','fu','he','ho'] },
+  { label:'ま・マ行', keys:['ma','mi','mu','me','mo'] },
+  { label:'や・ヤ行', keys:['ya','yu','yo'] },
+  { label:'ら・ラ行', keys:['ra','ri','ru','re','ro'] },
+  { label:'わ・ワ行+ん・ン', keys:['wa','wo','n'] }
 ];
 
 // Words from word lists
