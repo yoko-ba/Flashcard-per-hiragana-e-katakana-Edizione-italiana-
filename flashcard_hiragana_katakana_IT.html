@@ -628,11 +628,16 @@ let isFlipped = false;
 let difficultSet = new Set(JSON.parse(localStorage.getItem('difficult') || '[]'));
 let showOnlyDifficult = false;
 let currentRow = 'tutti';
+let touchStartX = 0;
+let touchEndX = 0;
+let card;
+
 
 // ─────────────────────────────────────────
 // INIT
 // ─────────────────────────────────────────
 function init() {
+  card = document.getElementById('main-card');
   buildRowFilters();
   buildDeck();
   renderCard();
@@ -863,18 +868,29 @@ init();
 // ─────────────────────────────────────────
 // SWIPE
 // ─────────────────────────────────────────	
-	let touchStartX = 0;
-let touchEndX = 0;
-
-const card = document.getElementById('main-card');
+	let touchStartTime = 0;
 
 card.addEventListener('touchstart', e => {
   touchStartX = e.changedTouches[0].screenX;
-});
+}, { passive: true });
 
 card.addEventListener('touchend', e => {
   touchEndX = e.changedTouches[0].screenX;
-  handleSwipe();
+
+  const diff = touchEndX - touchStartX;
+
+  // タップ判定（小さい移動）
+  if (Math.abs(diff) < 30) {
+    flipCard();
+    return;
+  }
+
+  // スワイプ
+  if (diff < -50) {
+    navigate(1);
+  } else if (diff > 50) {
+    navigate(-1);
+  }
 });
 
 function handleSwipe() {
