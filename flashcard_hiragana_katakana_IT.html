@@ -630,6 +630,7 @@ let showOnlyDifficult = false;
 let currentRow = 'tutti';
 let touchStartX = 0;
 let touchEndX = 0;
+let touchStartTime = 0;
 let card;
 
 
@@ -872,26 +873,28 @@ init();
 
 card.addEventListener('touchstart', e => {
   touchStartX = e.changedTouches[0].screenX;
+  touchStartTime = Date.now();
 }, { passive: true });
-
+	
 card.addEventListener('touchend', e => {
   touchEndX = e.changedTouches[0].screenX;
 
   const diff = touchEndX - touchStartX;
+  const time = Date.now() - touchStartTime;
 
-  // タップ判定（小さい移動）
-  if (Math.abs(diff) < 30) {
+  // ⭐タップ条件（重要）
+  if (time < 250 && Math.abs(diff) < 20) {
     flipCard();
     return;
   }
 
   // スワイプ
-  if (diff < -50) {
+  if (diff < -60) {
     navigate(1);
-  } else if (diff > 50) {
+  } else if (diff > 60) {
     navigate(-1);
   }
-});
+}, { passive: true });
 
 function handleSwipe() {
   const diff = touchEndX - touchStartX;
