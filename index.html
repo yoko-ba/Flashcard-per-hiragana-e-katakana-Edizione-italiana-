@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ひらがな・カタカナ フラッシュカード — Edizione Italiana 2026</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;700&family=Noto+Serif+JP:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Space+Mono:wght@400;700&display=swap');
+
+:root {
+  --ink: #1a2a1e;
+  --paper: #f4f8f5;
+  --cream: #e4f0e8;
+  --red: #2e7d50;
+  --red-soft: #c8e6d0;
+  --gold: #5a8a3c;
+  --grey: #6a8070;
+  --border: #b8d4bf;
+  --card-bg: #ffffff;
+  --shadow: 0 4px 24px rgba(30,70,40,0.10);
+  --shadow-hover: 0 8px 40px rgba(30,70,40,0.18);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Cormorant Garamond', 'Noto Serif JP', serif;
+  background: var(--paper);
+  color: var(--ink);
+  min-height: 100vh;
+}
+
+/* ── HEADER ── */
+header {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 14px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  border-bottom: 3px solid var(--red);
+}
+
+.header-title {
+  font-family: 'Noto Serif JP', serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: .04em;
+  line-height: 1.3;
+}
+.header-title span { font-size: .75rem; color: #bbb; display: block; font-family: 'Cormorant Garamond', serif; font-style: italic; }
+
+.header-controls { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+
+.btn {
+  font-family: 'Space Mono', monospace;
+  font-size: .7rem;
+  letter-spacing: .06em;
+  border: 1.5px solid currentColor;
+  background: transparent;
+  color: var(--paper);
+  padding: 5px 12px;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: background .18s, color .18s;
+  text-transform: uppercase;
+}
+.btn:hover { background: var(--paper); color: var(--ink); }
+.btn.active { background: var(--red); border-color: var(--red); color: #fff; }
+.btn.gold { color: var(--gold); border-color: var(--gold); }
+.btn.gold:hover { background: var(--gold); color: #fff; }
+.btn-icon { font-size: .9rem; padding: 5px 9px; }
+
+/* ── FILTER ROW ── */
+.filter-row {
+  background: var(--cream);
+  border-bottom: 1px solid var(--border);
+  padding: 10px 28px;
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.filter-label {
+  font-family: 'Space Mono', monospace;
+  font-size: .65rem;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--grey);
+  margin-right: 4px;
+}
+.filter-btn {
+  font-family: 'Noto Sans JP', sans-serif;
+  font-size: .8rem;
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--ink);
+  padding: 3px 10px;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: all .15s;
+}
+.filter-btn:hover { border-color: var(--red); color: var(--red); }
+.filter-btn.active { background: var(--red); border-color: var(--red); color: #fff; }
+
+/* ── PROGRESS ── */
+.progress-bar-wrap {
+  background: var(--cream);
+  padding: 8px 28px 10px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.progress-track { flex: 1; height: 4px; background: var(--border); border-radius: 2px; overflow: hidden; }
+.progress-fill { height: 100%; background: var(--red); border-radius: 2px; transition: width .3s; }
+.progress-label { font-family: 'Space Mono', monospace; font-size: .65rem; color: var(--grey); white-space: nowrap; }
+
+/* ── MAIN LAYOUT ── */
+.main-wrap { display: flex; gap: 0; }
+
+
+/* ── CARD AREA ── */
+.card-area {
+  flex: 1;
+  padding: 32px 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  min-height: calc(100vh - 130px);
+}
+
+.card-wrapper {
+  perspective: 1000px;
+  width: 340px;
+  max-width: 100%;
+  height: 420px;
+}
+
+.card {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform .55s cubic-bezier(.4,0,.2,1);
+  cursor: pointer;
+}
+.card.flipped { transform: rotateY(180deg); }
+
+.card-face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.card-back { transform: rotateY(180deg); }
+
+/* FRONT */
+.card-front-top {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  position: relative;
+}
+.card-svg-wrap {
+  width: 70%;
+  height: 70%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.card-svg-wrap img, .card-svg-wrap svg {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.card-front-bottom { display: none; }
+.card-sound-btn { display: none; }
+.card-romaji { display: none; }
+.card-stroke-info { display: none; }
+
+.difficult-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: transparent;
+  border: none;
+  font-size: 1.1rem;
+  cursor: pointer;
+  z-index: 10;
+  transition: transform .2s;
+}
+.difficult-btn:hover { transform: scale(1.3); }
+
+/* BACK */
+.card-back .card-face-inner {
+  padding: 22px 20px;
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.back-kana-row {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+.back-kana {
+  font-family: 'Noto Serif JP', serif;
+  font-size: 3.2rem;
+  line-height: 1;
+  color: var(--ink);
+}
+.back-romaji {
+  font-family: 'Space Mono', monospace;
+  font-size: 3rem;
+  color: var(--grey);
+}
+.back-sound-btn {
+  background: var(--cream);
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: .85rem;
+  margin-left: auto;
+  align-self: center;
+  transition: background .15s;
+}
+.back-sound-btn:hover { background: var(--red); color: #fff; }
+
+.words-section { border-top: 1px solid var(--border); padding-top: 12px; }
+.words-title {
+  font-family: 'Space Mono', monospace;
+  font-size: .6rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--grey);
+  margin-bottom: 8px;
+}
+.word-item {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 6px 10px;
+  padding: 5px 0;
+  border-bottom: 1px solid var(--cream);
+  align-items: baseline;
+}
+.word-kana {
+  font-family: 'Noto Sans JP', sans-serif;
+  font-size: .9rem;
+  font-weight: 700;
+}
+.word-italian { font-size: 1.3rem; color: var(--ink); font-style: italic; }
+.word-pos {
+  font-family: 'Space Mono', monospace;
+  font-size: 1rem;
+  color: var(--grey);
+  background: var(--cream);
+  padding: 1px 5px;
+  border-radius: 2px;
+  white-space: nowrap;
+}
+
+/* ── NAV BUTTONS ── */
+.nav-row {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+.nav-btn {
+  background: var(--ink);
+  color: var(--paper);
+  border: none;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background .18s, transform .15s;
+  box-shadow: var(--shadow);
+}
+.nav-btn:hover { background: var(--red); transform: scale(1.08); }
+
+.flip-hint {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: .75rem;
+  color: var(--grey);
+  font-style: italic;
+  text-align: center;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 600px) {
+  header { padding: 10px 14px; }
+  .filter-row, .progress-bar-wrap { padding: 8px 14px; }
+  .card-area { padding: 20px 14px; }
+  .card-wrapper { width: 300px; height: 380px; }
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-title">
+    Hiragana Katakana Flashcard
+    <span>Edizione Italiana</span>
+  </div>
+  <div class="header-controls">
+    <button class="btn active" id="btn-hiragana" onclick="setScript('hiragana')">Hiragana</button>
+    <button class="btn" id="btn-katakana" onclick="setScript('katakana')">Katakana</button>
+    <button class="btn" id="btn-difficult" onclick="toggleDifficult()">⚠️ Difficili</button>
+    <button class="btn gold" onclick="shuffle()">⇄ Mescola</button>
+    <button class="btn" onclick="reset()">↺ Ricomincia</button>
+  </div>
+</header>
+
+<!-- FILTER ROW -->
+<div class="filter-row">
+  <span class="filter-label">Riga:</span>
+  <button class="filter-btn active" onclick="setRow('tutti')">Tutti</button>
+  <div id="row-filters"></div>
+</div>
+
+<!-- PROGRESS -->
+<div class="progress-bar-wrap">
+  <div class="progress-track"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+  <span class="progress-label" id="progress-label">0 / 0</span>
+</div>
+
+<!-- MAIN -->
+<div class="main-wrap">
+
+
+  <!-- Card area -->
+  <div class="card-area">
+    <div class="card-wrapper">
+      <div class="card" id="main-card" onclick="flipCard()">
+        <!-- FRONT -->
+        <div class="card-face card-front">
+          <div class="card-front-top">
+            <div class="card-svg-wrap" id="card-svg"></div>
+            <button class="card-sound-btn" id="sound-front" onclick="event.stopPropagation(); speak()" title="Ascolta">🔊</button>
+            <button class="difficult-btn" id="diff-btn" onclick="event.stopPropagation(); toggleDifficultCard()" title="Aggiungi ai difficili">😓</button>
+          </div>
+          <div class="card-front-bottom">
+            <div class="card-romaji" id="card-romaji">—</div>
+            <div class="card-stroke-info" id="card-stroke">— tratti</div>
+          </div>
+        </div>
+        <!-- BACK -->
+        <div class="card-face card-back">
+          <div class="card-face-inner" id="card-back-inner">
+            <div class="back-kana-row">
+              <div class="back-kana" id="back-kana">—</div>
+              <div class="back-romaji" id="back-romaji">—</div>
+              <button class="back-sound-btn" onclick="event.stopPropagation(); speak()" title="Ascolta">🔊</button>
+            </div>
+            <div class="words-section">
+              <div class="words-title">Parole correlate</div>
+              <div id="word-list"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="nav-row">
+      <button class="nav-btn" onclick="navigate(-1)" title="Precedente">◀</button>
+      <button class="nav-btn" onclick="flipCard()" title="Gira">↺</button>
+      <button class="nav-btn" onclick="navigate(1)" title="Successivo">▶</button>
+    </div>
+    <div class="flip-hint">Clicca la carta per girare • Usa ← → per navigare</div>
+  </div>
+</div>
+
+<script>
+// ─────────────────────────────────────────
+// DATA
+// ─────────────────────────────────────────
+
+// SVG file IDs from Google Drive
+const SVG_IDS = {
+  hiragana: {
+    a:'h_a.svg', i:'h_i.svg',
+    u:'h_u.svg', e:'h_e.svg',
+    o:'h_o.svg',
+    ka:'h_ka.svg', ki:'h_ki.svg',
+    ku:'h_ku.svg', ke:'h_ke.svg',
+    ko:'h_ko.svg',
+    sa:'h_sa.svg', shi:'h_shi.svg',
+    su:'h_su.svg', se:'h_se.svg',
+    so:'h_so.svg',
+    ta:'h_ta.svg', chi:'h_chi.svg',
+    tsu:'h_tsu.svg', te:'h_te.svg',
+    to:'h_to.svg',
+    na:'h_na.svg', ni:'h_ni.svg',
+    nu:'h_nu.svg', ne:'h_ne.svg',
+    no:'h_no.svg',
+    ha:'h_ha.svg', hi:'h_hi.svg',
+    fu:'h_fu.svg', he:'h_he.svg',
+    ho:'h_ho.svg',
+    ma:'h_ma.svg', mi:'h_mi.svg',
+    mu:'h_mu.svg', me:'h_me.svg',
+    mo:'h_mo.svg',
+    ya:'h_ya.svg', yu:'h_yu.svg',
+    yo:'h_yo.svg',
+    ra:'h_ra.svg', ri:'h_ri.svg',
+    ru:'h_ru.svg', re:'h_re.svg',
+    ro:'h_ro.svg',
+    wa:'h_wa.svg', wo:'h_wo.svg',
+    n:'h_n.svg'
+  },
+  katakana: {
+    a:'k_a.svg', i:'k_i.svg',
+    u:'k_u.svg', e:'k_e.svg',
+    o:'k_o.svg',
+    ka:'k_ka.svg', ki:'k_ki.svg',
+    ku:'k_ku.svg', ke:'k_ke.svg',
+    ko:'k_ko.svg',
+    sa:'k_sa.svg', shi:'k_shi.svg',
+    su:'k_su.svg', se:'k_se.svg',
+    so:'k_so.svg',
+    ta:'k_ta.svg', chi:'k_chi.svg',
+    tsu:'k_tsu.svg', te:'k_te.svg',
+    to:'k_to.svg',
+    na:'k_na.svg', ni:'k_ni.svg',
+    nu:'k_nu.svg', ne:'k_ne.svg',
+    no:'k_no.svg',
+    ha:'k_ha.svg', hi:'k_hi.svg',
+    fu:'k_fu.svg', he:'k_he.svg',
+    ho:'k_ho.svg',
+    ma:'k_ma.svg', mi:'k_mi.svg',
+    mu:'k_mu.svg', me:'k_me.svg',
+    mo:'k_mo.svg',
+    ya:'k_ya.svg', yu:'k_yu.svg',
+    yo:'k_yo.svg',
+    ra:'k_ra.svg', ri:'k_ri.svg',
+    ru:'k_ru.svg', re:'k_re.svg',
+    ro:'k_ro.svg',
+    wa:'k_wa.svg', wo:'k_wo.svg',
+    n:'k_n.svg'
+  }
+};
+
+// Kana char mapping
+const KANA = {
+  hiragana: {
+    a:'あ',i:'い',u:'う',e:'え',o:'お',
+    ka:'か',ki:'き',ku:'く',ke:'け',ko:'こ',
+    sa:'さ',shi:'し',su:'す',se:'せ',so:'そ',
+    ta:'た',chi:'ち',tsu:'つ',te:'て',to:'と',
+    na:'な',ni:'に',nu:'ぬ',ne:'ね',no:'の',
+    ha:'は',hi:'ひ',fu:'ふ',he:'へ',ho:'ほ',
+    ma:'ま',mi:'み',mu:'む',me:'め',mo:'も',
+    ya:'や',yu:'ゆ',yo:'よ',
+    ra:'ら',ri:'り',ru:'る',re:'れ',ro:'ろ',
+    wa:'わ',wo:'を',n:'ん'
+  },
+  katakana: {
+    a:'ア',i:'イ',u:'ウ',e:'エ',o:'オ',
+    ka:'カ',ki:'キ',ku:'ク',ke:'ケ',ko:'コ',
+    sa:'サ',shi:'シ',su:'ス',se:'セ',so:'ソ',
+    ta:'タ',chi:'チ',tsu:'ツ',te:'テ',to:'ト',
+    na:'ナ',ni:'ニ',nu:'ヌ',ne:'ネ',no:'ノ',
+    ha:'ハ',hi:'ヒ',fu:'フ',he:'ヘ',ho:'ホ',
+    ma:'マ',mi:'ミ',mu:'ム',me:'メ',mo:'モ',
+    ya:'ヤ',yu:'ユ',yo:'ヨ',
+    ra:'ラ',ri:'リ',ru:'ル',re:'レ',ro:'ロ',
+    wa:'ワ',wo:'ヲ',n:'ン'
+  }
+};
+
+const STROKES = {
+  a:3,i:2,u:2,e:2,o:3,
+  ka:3,ki:4,ku:1,ke:3,ko:2,
+  sa:3,shi:3,su:2,se:3,so:2,
+  ta:4,chi:3,tsu:1,te:4,to:2,
+  na:4,ni:3,nu:2,ne:4,no:1,
+  ha:3,hi:2,fu:3,he:1,ho:4,
+  ma:3,mi:3,mu:3,me:2,mo:3,
+  ya:3,yu:2,yo:2,
+  ra:2,ri:2,ru:2,re:2,ro:1,
+  wa:3,wo:3,n:1
+};
+
+// Row groupings
+const ROWS = [
+  { label:'あ・ア行', keys:['a','i','u','e','o'] },
+  { label:'か・カ行', keys:['ka','ki','ku','ke','ko'] },
+  { label:'さ・サ行', keys:['sa','shi','su','se','so'] },
+  { label:'た・タ行', keys:['ta','chi','tsu','te','to'] },
+  { label:'な・ナ行', keys:['na','ni','nu','ne','no'] },
+  { label:'は・ハ行', keys:['ha','hi','fu','he','ho'] },
+  { label:'ま・マ行', keys:['ma','mi','mu','me','mo'] },
+  { label:'や・ヤ行', keys:['ya','yu','yo'] },
+  { label:'ら・ラ行', keys:['ra','ri','ru','re','ro'] },
+  { label:'わ・ワ行+ん・ン', keys:['wa','wo','n'] }
+];
+
+// Words from word lists
+const WORDS = {
+  hiragana: {
+    a: [{k:'あお',r:'ao',it:'azzurro / blu',pos:'s.'},{k:'あう',r:'au',it:'incontrarsi',pos:'v.'}],
+    i: [{k:'いえ',r:'ie',it:'casa',pos:'s.'},{k:'いう',r:'iu',it:'dire',pos:'v.'}],
+    u: [{k:'うえ',r:'ue',it:'sopra / su',pos:'s.'}],
+    e: [{k:'えき',r:'eki',it:'stazione',pos:'s.'}],
+    o: [{k:'おおい',r:'ooi',it:'molti / tanto',pos:'agg.'}],
+    ka: [{k:'かお',r:'kao',it:'viso / faccia',pos:'s.'},{k:'かく',r:'kaku',it:'scrivere',pos:'v.'}],
+    ki: [{k:'きく',r:'kiku',it:'ascoltare',pos:'v.'}],
+    ku: [{k:'くに',r:'kuni',it:'paese',pos:'s.'}],
+    ke: [{k:'けが',r:'kega',it:'ferita',pos:'s.'}],
+    ko: [{k:'こえ',r:'koe',it:'voce',pos:'s.'}],
+    sa: [{k:'さかな',r:'sakana',it:'pesce',pos:'s.'},{k:'さむい',r:'samui',it:'freddo',pos:'agg.'}],
+    shi: [{k:'しお',r:'shio',it:'sale',pos:'s.'},{k:'すし',r:'sushi',it:'sushi',pos:'s.'}],
+    su: [{k:'すごい',r:'sugoi',it:'incredibile',pos:'agg.'},{k:'すきな',r:'sukina',it:'piacere',pos:'agg.'}],
+    se: [{k:'せかい',r:'sekai',it:'mondo',pos:'s.'}],
+    so: [{k:'そこ',r:'soko',it:'lì / quel posto',pos:'s.'},{k:'そう',r:'sou',it:'così / esatto',pos:'avv.'}],
+    ta: [{k:'たかい',r:'takai',it:'alto / caro',pos:'agg.'},{k:'たのしい',r:'tanoshii',it:'divertente',pos:'agg.'}],
+    chi: [{k:'ちかい',r:'chikai',it:'vicino',pos:'agg.'},{k:'ちいさい',r:'chiisai',it:'piccolo',pos:'agg.'}],
+    tsu: [{k:'つき',r:'tsuki',it:'luna',pos:'s.'},{k:'つくる',r:'tsukuru',it:'fare / creare',pos:'v.'}],
+    te: [{k:'てがみ',r:'tegami',it:'lettera',pos:'s.'}],
+    to: [{k:'とおい',r:'tooi',it:'lontano',pos:'agg.'},{k:'とり',r:'tori',it:'uccello',pos:'s.'}],
+    na: [{k:'なまえ',r:'namae',it:'nome',pos:'s.'},{k:'なつ',r:'natsu',it:'estate',pos:'s.'}],
+    ni: [{k:'にく',r:'niku',it:'carne',pos:'s.'},{k:'にほん',r:'nihon',it:'Giappone',pos:'s.'}],
+    nu: [{k:'ぬの',r:'nuno',it:'tessuto',pos:'s.'}],
+    ne: [{k:'ねこ',r:'neko',it:'gatto',pos:'s.'},{k:'ねつ',r:'netsu',it:'febbre',pos:'s.'}],
+    no: [{k:'のむ',r:'nomu',it:'bere',pos:'v.'},{k:'のりもの',r:'norimono',it:'mezzo di trasporto',pos:'s.'}],
+    ha: [{k:'はな',r:'hana',it:'fiore / naso',pos:'s.'},{k:'はやい',r:'hayai',it:'veloce',pos:'agg.'}],
+    hi: [{k:'ひと',r:'hito',it:'persona',pos:'s.'},{k:'ひろい',r:'hiroi',it:'ampio',pos:'agg.'}],
+    fu: [{k:'ふゆ',r:'fuyu',it:'inverno',pos:'s.'}],
+    he: [{k:'へや',r:'heya',it:'stanza / camera',pos:'s.'}],
+    ho: [{k:'ほし',r:'hoshi',it:'stella',pos:'s.'},{k:'ほしい',r:'hoshii',it:'volere',pos:'agg.'}],
+    ma: [{k:'まち',r:'machi',it:'città / quartiere',pos:'s.'}],
+    mi: [{k:'みず',r:'mizu',it:'acqua',pos:'s.'}],
+    mu: [{k:'むし',r:'mushi',it:'insetto',pos:'s.'}],
+    me: [{k:'めがね',r:'megane',it:'occhiali',pos:'s.'}],
+    mo: [{k:'もり',r:'mori',it:'foresta',pos:'s.'}],
+    ya: [{k:'やま',r:'yama',it:'montagna',pos:'s.'}],
+    yu: [{k:'ゆき',r:'yuki',it:'neve',pos:'s.'}],
+    yo: [{k:'よる',r:'yoru',it:'notte',pos:'s.'}],
+    ra: [{k:'らいねん',r:'rainen',it:'l\'anno prossimo',pos:'s.'}],
+    ri: [{k:'りんご',r:'ringo',it:'mela',pos:'s.'}],
+    ru: [{k:'るす',r:'rusu',it:'assenza da casa',pos:'s.'}],
+    re: [{k:'れんしゅう',r:'renshuu',it:'esercizio / pratica',pos:'s.'}],
+    ro: [{k:'ろうそく',r:'rousoku',it:'candela',pos:'s.'}],
+    wa: [{k:'わたし',r:'watashi',it:'io',pos:'pron.'}],
+    wo: [{k:'をとこ',r:'otoko',it:'uomo (part. grammaticale を)',pos:'part.'}],
+    n: [{k:'ほん',r:'hon',it:'libro',pos:'s.'},{k:'にほん',r:'nihon',it:'Giappone',pos:'s.'}]
+  },
+  katakana: {
+    a: [{k:'アイコン',r:'aikon',it:'icona',pos:'s.'},{k:'アプリ',r:'apuri',it:'app',pos:'s.'}],
+    i: [{k:'インターネット',r:'intaanetto',it:'internet',pos:'s.'}],
+    u: [{k:'ウイルス',r:'uirusu',it:'virus informatico',pos:'s.'}],
+    e: [{k:'エラー',r:'eraa',it:'errore',pos:'s.'}],
+    o: [{k:'オンライン',r:'onrain',it:'online',pos:'agg.'},{k:'オーディオ',r:'oodio',it:'audio',pos:'s.'}],
+    ka: [{k:'カメラ',r:'kamera',it:'fotocamera',pos:'s.'},{k:'キーボード',r:'kiiboodo',it:'tastiera',pos:'s.'}],
+    ki: [{k:'キーボード',r:'kiiboodo',it:'tastiera',pos:'s.'}],
+    ku: [{k:'クリック',r:'kurikku',it:'clic',pos:'s.'},{k:'クラウド',r:'kuraudo',it:'cloud',pos:'s.'}],
+    ke: [{k:'ゲーム',r:'geemu',it:'gioco / videogioco',pos:'s.'}],
+    ko: [{k:'コピー',r:'kopii',it:'copia',pos:'s.'},{k:'コンピューター',r:'konpyuutaa',it:'computer',pos:'s.'}],
+    sa: [{k:'サイト',r:'saito',it:'sito web',pos:'s.'},{k:'サーバー',r:'saabaa',it:'server',pos:'s.'}],
+    shi: [{k:'システム',r:'shisutemu',it:'sistema',pos:'s.'},{k:'シェア',r:'shea',it:'condivisione',pos:'s.'}],
+    su: [{k:'スマホ',r:'sumaho',it:'smartphone',pos:'s.'},{k:'スクリーン',r:'sukuriin',it:'schermo',pos:'s.'}],
+    se: [{k:'セキュリティ',r:'sekyuriti',it:'sicurezza informatica',pos:'s.'}],
+    so: [{k:'ソフト',r:'sofuto',it:'software',pos:'s.'}],
+    ta: [{k:'タブレット',r:'taburetto',it:'tablet',pos:'s.'},{k:'タップ',r:'tappu',it:'tap (tocco)',pos:'s.'}],
+    chi: [{k:'チャット',r:'chatto',it:'chat',pos:'s.'}],
+    tsu: [{k:'ツール',r:'tsuuru',it:'strumento',pos:'s.'}],
+    te: [{k:'テキスト',r:'tekisuto',it:'testo',pos:'s.'},{k:'データ',r:'deeta',it:'dati',pos:'s.'}],
+    to: [{k:'ドメイン',r:'domein',it:'dominio',pos:'s.'},{k:'ドライブ',r:'doraibu',it:'drive',pos:'s.'}],
+    na: [{k:'ナビ',r:'nabi',it:'navigatore / GPS',pos:'s.'}],
+    ni: [{k:'ニュース',r:'nyuusu',it:'notizie',pos:'s.'}],
+    nu: [{k:'ヌードル',r:'nuudoru',it:'noodle',pos:'s.'}],
+    ne: [{k:'ネット',r:'netto',it:'internet / rete',pos:'s.'},{k:'ネットワーク',r:'nettowaaku',it:'rete / network',pos:'s.'}],
+    no: [{k:'ノート',r:'nooto',it:'notebook / appunti',pos:'s.'},{k:'ノートパソコン',r:'nooto pasokon',it:'laptop',pos:'s.'}],
+    ha: [{k:'ハードウェア',r:'haadouea',it:'hardware',pos:'s.'},{k:'パスワード',r:'pasuwaado',it:'password',pos:'s.'}],
+    hi: [{k:'ヒント',r:'hinto',it:'suggerimento',pos:'s.'}],
+    fu: [{k:'ファイル',r:'fairu',it:'file',pos:'s.'},{k:'フォルダ',r:'foruda',it:'cartella',pos:'s.'}],
+    he: [{k:'ヘッドフォン',r:'heddofon',it:'cuffie',pos:'s.'}],
+    ho: [{k:'ホームページ',r:'hoomupeiji',it:'homepage',pos:'s.'}],
+    ma: [{k:'マウス',r:'mausu',it:'mouse',pos:'s.'},{k:'マップ',r:'mappu',it:'mappa',pos:'s.'}],
+    mi: [{k:'ミュージック',r:'myuujikku',it:'musica',pos:'s.'}],
+    mu: [{k:'モデム',r:'modemu',it:'modem',pos:'s.'}],
+    me: [{k:'メール',r:'meeru',it:'email',pos:'s.'},{k:'メッセージ',r:'messeeji',it:'messaggio',pos:'s.'}],
+    mo: [{k:'モニター',r:'monitaa',it:'monitor',pos:'s.'},{k:'モバイル',r:'mobairu',it:'mobile',pos:'s.'}],
+    ya: [{k:'ユーザー',r:'yuuzaa',it:'utente',pos:'s.'}],
+    yu: [{k:'ユーチューブ',r:'yuuchuubu',it:'YouTube',pos:'s.'}],
+    yo: [{k:'ヨーロッパ',r:'yooroppa',it:'Europa',pos:'s.'}],
+    ra: [{k:'ライブ',r:'raibu',it:'live / diretta',pos:'s.'}],
+    ri: [{k:'リンク',r:'rinku',it:'link',pos:'s.'},{k:'リセット',r:'risetto',it:'reset',pos:'s.'}],
+    ru: [{k:'ルーター',r:'ruutaa',it:'router',pos:'s.'}],
+    re: [{k:'レイアウト',r:'reiauto',it:'layout',pos:'s.'}],
+    ro: [{k:'ログイン',r:'roguin',it:'login / accesso',pos:'s.'},{k:'ロック',r:'rokku',it:'blocco',pos:'s.'}],
+    wa: [{k:'ワイファイ',r:'waifai',it:'Wi-Fi',pos:'s.'},{k:'ワイヤレス',r:'waiyaresu',it:'wireless',pos:'s.'}],
+    wo: [{k:'ヲ',r:'wo',it:'particella grammaticale (raro)',pos:'part.'}],
+    n: [{k:'ネットワーク',r:'nettowaaku',it:'rete / network',pos:'s.'}]
+  }
+};
+
+// ─────────────────────────────────────────
+// STATE
+// ─────────────────────────────────────────
+let currentScript = 'hiragana';
+let deck = [];
+let currentIndex = 0;
+let isFlipped = false;
+let difficultSet = new Set(JSON.parse(localStorage.getItem('difficult') || '[]'));
+let showOnlyDifficult = false;
+let currentRow = 'tutti';
+let touchStartX = 0;
+let touchEndX = 0;
+let card;
+
+
+// ─────────────────────────────────────────
+// INIT
+// ─────────────────────────────────────────
+function init() {
+  card = document.getElementById('main-card');
+  buildRowFilters();
+  buildDeck();
+  renderCard();
+}
+
+function buildRowFilters() {
+  const container = document.getElementById('row-filters');
+  container.innerHTML = '';
+  ROWS.forEach(row => {
+    const btn = document.createElement('button');
+    btn.className = 'filter-btn';
+    btn.textContent = row.label;
+    btn.onclick = () => setRow(row.label);
+    container.appendChild(btn);
+  });
+}
+
+function buildDeck() {
+  const allKeys = Object.keys(SVG_IDS[currentScript]);
+  let keys;
+  if (currentRow === 'tutti') {
+    keys = allKeys;
+  } else {
+    const row = ROWS.find(r => r.label === currentRow);
+    keys = row ? row.keys : allKeys;
+  }
+  if (showOnlyDifficult) {
+    keys = keys.filter(k => difficultSet.has(currentScript + ':' + k));
+  }
+  deck = keys.map(k => ({ key: k }));
+  currentIndex = 0;
+  isFlipped = false;
+}
+
+function setScript(s) {
+  currentScript = s;
+  document.getElementById('btn-hiragana').classList.toggle('active', s === 'hiragana');
+  document.getElementById('btn-katakana').classList.toggle('active', s === 'katakana');
+  document.getElementById('main-card').classList.remove('flipped');
+  isFlipped = false;
+  buildDeck();
+  renderCard();
+}
+
+function setRow(label) {
+  currentRow = label;
+  document.querySelectorAll('.filter-btn').forEach(b => {
+    b.classList.toggle('active', b.textContent === label || (label === 'tutti' && b.textContent === 'Tutti'));
+  });
+  document.querySelector('.filter-btn.active') || document.querySelector('.filter-btn');
+  buildDeck();
+  renderCard();
+}
+
+function shuffle() {
+  for (let i = deck.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [deck[i], deck[j]] = [deck[j], deck[i]];
+  }
+  currentIndex = 0;
+  isFlipped = false;
+  document.getElementById('main-card').classList.remove('flipped');
+  renderCard();
+}
+
+function reset() {
+  buildDeck();
+  renderCard();
+}
+
+function navigate(dir) {
+  currentIndex = (currentIndex + dir + deck.length) % deck.length;
+  isFlipped = false;
+  document.getElementById('main-card').classList.remove('flipped');
+  renderCard();
+}
+
+function flipCard() {
+  isFlipped = !isFlipped;
+  document.getElementById('main-card').classList.toggle('flipped', isFlipped);
+}
+
+function toggleDifficult() {
+  showOnlyDifficult = !showOnlyDifficult;
+  document.getElementById('btn-difficult').classList.toggle('active', showOnlyDifficult);
+  buildDeck();
+  renderCard();
+}
+
+function toggleDifficultCard() {
+  if (deck.length === 0) return;
+  const id = currentScript + ':' + deck[currentIndex].key;
+  if (difficultSet.has(id)) {
+    difficultSet.delete(id);
+  } else {
+    difficultSet.add(id);
+  }
+  localStorage.setItem('difficult', JSON.stringify([...difficultSet]));
+  updateDiffBtn();
+}
+
+
+
+// ─────────────────────────────────────────
+// RENDER
+// ─────────────────────────────────────────
+function renderCard() {
+  if (deck.length === 0) {
+    document.getElementById('card-svg').innerHTML = '<div style="font-size:1.2rem;color:#888;text-align:center">Nessuna carta</div>';
+    document.getElementById('card-romaji').textContent = '—';
+    document.getElementById('card-stroke').textContent = '';
+    document.getElementById('back-kana').textContent = '—';
+    document.getElementById('back-romaji').textContent = '—';
+    document.getElementById('word-list').innerHTML = '';
+    updateProgress();
+    return;
+  }
+
+  const item = deck[currentIndex];
+  const key = item.key;
+  const kana = KANA[currentScript][key];
+  const svgId = SVG_IDS[currentScript][key];
+  const strokes = STROKES[key] || '—';
+
+  // SVG
+  const svgUrl = `svg/${svgId}`;
+  document.getElementById('card-svg').innerHTML =
+    `<img src="${svgUrl}" alt="${kana}" style="width:100%;height:100%;max-width:260px;max-height:260px;" loading="eager" />`;
+
+  document.getElementById('card-romaji').textContent = key;
+  document.getElementById('card-stroke').textContent = strokes + (strokes === 1 ? ' tratto' : ' tratti');
+
+  // Back
+  document.getElementById('back-kana').textContent = kana;
+  document.getElementById('back-romaji').textContent = key;
+
+  // Words
+  const words = (WORDS[currentScript][key] || []);
+  const wl = document.getElementById('word-list');
+  wl.innerHTML = words.map(w =>
+    `<div class="word-item">
+      <span class="word-kana">${w.k}</span>
+      <span class="word-italian">${w.it}</span>
+      <span class="word-pos">${w.pos}</span>
+    </div>`
+  ).join('') || '<div style="color:#aaa;font-style:italic;font-size:.8rem">Nessuna parola</div>';
+
+  updateDiffBtn();
+  updateProgress();
+}
+
+function updateDiffBtn() {
+  if (deck.length === 0) return;
+  const id = currentScript + ':' + deck[currentIndex].key;
+  document.getElementById('diff-btn').textContent = difficultSet.has(id) ? '⚠️' : '⭐';
+}
+
+function updateProgress() {
+  const total = deck.length;
+  const pos = total > 0 ? currentIndex + 1 : 0;
+  const pct = total > 0 ? (pos / total) * 100 : 0;
+  document.getElementById('progress-fill').style.width = pct + '%';
+  document.getElementById('progress-label').textContent = pos + ' / ' + total;
+}
+
+
+
+function jumpTo(sc, key) {
+  if (sc !== currentScript) setScript(sc);
+  const idx = deck.findIndex(d => d.key === key);
+  if (idx >= 0) {
+    currentIndex = idx;
+    isFlipped = false;
+    document.getElementById('main-card').classList.remove('flipped');
+    renderCard();
+  }
+}
+
+// ─────────────────────────────────────────
+// SPEECH
+// ─────────────────────────────────────────
+function speak() {
+  if (deck.length === 0) return;
+
+  const key = deck[currentIndex].key;
+  const kana = KANA[currentScript][key];
+
+  if (!('speechSynthesis' in window)) return;
+
+  const utter = new SpeechSynthesisUtterance(kana);
+
+  utter.lang = 'ja-JP';
+  utter.rate = 0.85;
+
+  // ★重要：日本語音声を明示的に選ぶ
+  const voices = speechSynthesis.getVoices();
+  const jpVoice =
+    voices.find(v => v.lang.includes('ja')) ||
+    voices.find(v => v.lang.includes('JP'));
+
+  if (jpVoice) {
+    utter.voice = jpVoice;
+  }
+
+  speechSynthesis.cancel();
+  speechSynthesis.speak(utter);
+}
+	
+	window.speechSynthesis.onvoiceschanged = () => {
+  speechSynthesis.getVoices();
+};
+
+// ─────────────────────────────────────────
+// KEYBOARD
+// ─────────────────────────────────────────
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown') navigate(1);
+  else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') navigate(-1);
+  else if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); flipCard(); }
+});
+
+
+// ─────────────────────────────────────────
+// START
+// ─────────────────────────────────────────
+init();
+// ─────────────────────────────────────────
+// SWIPE
+// ─────────────────────────────────────────
+let touchStartTime = 0;
+
+card.addEventListener('touchstart', e => {
+  touchStartX = e.changedTouches[0].screenX;
+  touchStartTime = Date.now();
+}, { passive: true });
+	
+card.addEventListener('touchend', e => {
+  touchEndX = e.changedTouches[0].screenX;
+
+  const diff = touchEndX - touchStartX;
+  const time = Date.now() - touchStartTime;
+
+  if (time < 250 && Math.abs(diff) < 20) {
+    flipCard();
+    return;
+  }
+
+  if (diff < -60) {
+    navigate(1);
+  } else if (diff > 60) {
+    navigate(-1);
+  }
+}, { passive: true });
+</script>
+</body>
+</html>
