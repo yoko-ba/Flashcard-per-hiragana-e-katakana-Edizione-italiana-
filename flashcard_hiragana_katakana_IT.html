@@ -763,6 +763,13 @@ function renderCard() {
   const kana = KANA[currentScript][key];
   const svgId = SVG_IDS[currentScript][key];
   const strokes = STROKES[key] || '—';
+	
+// ★ここに入れる（テスト用）
+	setTimeout(() => {
+  document.getElementById('card-svg').innerHTML =
+    `<img src="svg/h_a.svg" style="width:200px;border:2px solid red;">`;
+}, 500);
+	
 
   // SVG
   const svgUrl = `svg/${svgId}`;
