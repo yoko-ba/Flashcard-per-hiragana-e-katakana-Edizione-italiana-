@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contatti — Hiragana e Katakana</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=Noto+Sans:wght@300;400;500&display=swap');
+
+:root {
+  --ink:    #1a2a1e;
+  --paper:  #f4f8f5;
+  --cream:  #e4f0e8;
+  --green:  #2e7d50;
+  --green2: #5a8a3c;
+  --border: #b8d4bf;
+  --grey:   #6a8070;
+  --light:  #b8d4bf;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Noto Sans', sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── HEADER ── */
+header {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 14px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 3px solid var(--green);
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.header-title {
+  font-family: 'Noto Serif JP', serif;
+  font-size: 1rem;
+  font-weight: 400;
+  letter-spacing: .04em;
+}
+.header-title span {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: .8rem;
+  color: #aaa;
+  display: block;
+}
+.back-link {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: .85rem;
+  color: var(--light);
+  text-decoration: none;
+  border: 1px solid var(--grey);
+  padding: 4px 12px;
+  border-radius: 2px;
+  transition: background .18s, color .18s;
+}
+.back-link:hover { background: var(--paper); color: var(--ink); }
+
+/* ── MAIN ── */
+main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 48px 20px;
+  gap: 32px;
+}
+
+.intro {
+  text-align: center;
+  max-width: 560px;
+}
+.intro h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.2rem;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 10px;
+}
+.intro p {
+  font-size: .95rem;
+  font-weight: 300;
+  color: var(--grey);
+  line-height: 1.7;
+}
+
+/* ── FORM ── */
+.form-card {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 36px 40px;
+  width: 100%;
+  max-width: 560px;
+  box-shadow: 0 4px 24px rgba(30,70,40,.08);
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 22px;
+}
+label {
+  font-size: .8rem;
+  font-weight: 500;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  color: var(--grey);
+}
+input, textarea {
+  font-family: 'Noto Sans', sans-serif;
+  font-size: .95rem;
+  font-weight: 300;
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: var(--paper);
+  color: var(--ink);
+  transition: border-color .18s;
+  outline: none;
+  resize: vertical;
+}
+input:focus, textarea:focus {
+  border-color: var(--green);
+}
+textarea { min-height: 140px; }
+
+.submit-btn {
+  width: 100%;
+  padding: 12px;
+  background: var(--green);
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: .06em;
+  cursor: pointer;
+  transition: background .18s;
+}
+.submit-btn:hover { background: var(--green2); }
+
+/* ── MESSAGGIO DI CONFERMA ── */
+.thank-you {
+  display: none;
+  text-align: center;
+  padding: 32px 20px;
+}
+.thank-you .kana {
+  font-family: 'Noto Serif JP', serif;
+  font-size: 2.8rem;
+  color: var(--green);
+  margin-bottom: 12px;
+}
+.thank-you h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.6rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+.thank-you p {
+  font-size: .9rem;
+  font-weight: 300;
+  color: var(--grey);
+}
+
+/* note -->
+.note {
+  font-size: .78rem;
+  color: var(--grey);
+  text-align: center;
+  max-width: 480px;
+  line-height: 1.6;
+}
+
+/* ── FOOTER ── */
+footer {
+  background: var(--ink);
+  border-top: 1px solid #2a3d2e;
+  padding: 16px 28px;
+  text-align: center;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: .8rem;
+  color: var(--grey);
+}
+
+@media (max-width: 600px) {
+  .form-card { padding: 24px 18px; }
+  .intro h1 { font-size: 1.7rem; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-title">
+    ひらがな・カタカナ
+    <span>Hiragana e Katakana — Edizione Italiana</span>
+  </div>
+  <a class="back-link" href="index.html">← Flashcard</a>
+</header>
+
+<main>
+
+  <div class="intro">
+    <h1>Contatti</h1>
+    <p>Hai domande sul libro o sul sito?<br>Scrivi un messaggio e ti risponderò il prima possibile.</p>
+  </div>
+
+  <!-- FORM — sostituire YOUR_FORM_ID con il proprio ID Formspree -->
+  <div class="form-card">
+    <form id="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+
+      <div class="form-group">
+        <label for="name">Nome</label>
+        <input type="text" id="name" name="name" placeholder="Il tuo nome" required>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Indirizzo email</label>
+        <input type="email" id="email" name="email" placeholder="tuo@email.com" required>
+      </div>
+
+      <div class="form-group">
+        <label for="message">Messaggio</label>
+        <textarea id="message" name="message" placeholder="Scrivi qui il tuo messaggio…" required></textarea>
+      </div>
+
+      <button type="submit" class="submit-btn">Invia messaggio</button>
+    </form>
+
+    <div class="thank-you" id="thank-you">
+      <div class="kana">ありがとう</div>
+      <h2>Messaggio inviato!</h2>
+      <p>Grazie per averci scritto. Ti risponderemo il prima possibile.</p>
+    </div>
+  </div>
+
+  <p class="note">
+    Le informazioni inviate tramite questo modulo sono utilizzate esclusivamente per rispondere alla tua richiesta e non vengono condivise con terze parti.
+  </p>
+
+</main>
+
+<footer>
+  © Yoko Hamatani — Hiragana e Katakana Edizione Italiana
+</footer>
+
+<script>
+const form = document.getElementById('contact-form');
+const thankYou = document.getElementById('thank-you');
+
+form.addEventListener('submit', async e => {
+  e.preventDefault();
+  const data = new FormData(form);
+  try {
+    const res = await fetch(form.action, {
+      method: 'POST',
+      body: data,
+      headers: { 'Accept': 'application/json' }
+    });
+    if (res.ok) {
+      form.style.display = 'none';
+      thankYou.style.display = 'block';
+    } else {
+      alert('Si è verificato un errore. Riprova più tardi.');
+    }
+  } catch {
+    alert('Impossibile inviare il messaggio. Controlla la connessione.');
+  }
+});
+</script>
+</body>
+</html>
