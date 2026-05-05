@@ -227,6 +227,8 @@ header {
   font-family: 'Space Mono', monospace;
   font-size: 3rem;
   color: var(--grey);
+  line-height: 1.2;
+  word-break: break-word;
 }
 .back-sound-btn {
   background: var(--cream);
@@ -784,6 +786,11 @@ function renderCard() {
       <span class="word-pos">${w.pos}</span>
     </div>`
   ).join('') || '<div style="color:#aaa;font-style:italic;font-size:.8rem">Nessuna parola</div>';
+  if (key === 'wo') {
+    wl.innerHTML += '<div style="margin-top:10px;padding:6px 8px;background:#f4f8f5;border-left:3px solid #2e7d50;font-size:.75rem;color:#6a8070;line-height:1.5;">' +
+      'Pronuncia: <strong style="color:#1a2a1e">o</strong><br>' +
+      'Si digita <strong style="color:#1a2a1e">wo</strong> sulla tastiera</div>';
+  }
 
   updateDiffBtn();
   updateProgress();
